@@ -171,12 +171,12 @@ class MonthlySplit(BaseCrossValidator):
         self.time_col = time_col
 
     def __repr__(self):
+        """Return a representation of the estimator."""
         return f"MonthlySplit(time_col={self.time_col!r})"
 
     def _extract_time_index(self, X):
         if not isinstance(X, (pd.Series, pd.DataFrame)):
             raise ValueError("Input must contain datetime information.")
-        
         if self.time_col == 'index':
             time_index = X.index
         else:
@@ -247,7 +247,6 @@ class MonthlySplit(BaseCrossValidator):
         idx_test : ndarray
             The testing set indices for that split.
         """
-
         months, month_to_indices = self._group_by_month(X)
         for i in range(len(months) - 1):
             idx_train = np.array(month_to_indices[months[i]], dtype=int)
